@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>People API Reference</title>
 
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -27,7 +27,7 @@
       </span>
     </a>
     <div class="tocify-wrapper">
-      <h1 class="title">People <span>API</span></h1>
+      <div class="title">People <span>API</span></div>
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
         </div>
@@ -41,17 +41,20 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="introduction">Introduction</h1>
+        
+          <h1 id="introduction">Introduction</h1>
+
+<blockquote>
+<p>API Endpoint</p>
+</blockquote>
+<pre class="highlight shell"><code>http://localhost:3000/api/
+</code></pre>
 
 <p>The People API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and to use HTTP response codes to indicate API errors.</p>
 
 <p>We support cross-origin resource sharing to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website&rsquo;s client-side code). </p>
 
 <p>JSON will be returned in all responses from the API, including errors .</p>
-
-<h1 id="api-endpoint">API Endpoint</h1>
-<pre class="highlight shell"><code>http://localhost:3000/api/
-</code></pre>
 
 <p>Use your base url with /api/ and API version (currently v1 is available) as your endpoint. For example:</p>
 
@@ -75,7 +78,7 @@ Example Request:</p>
 Use your secret key from the settings page. CURL uses the -u flag to pass basic auth credentials (adding a colon after your API key will prevent it from asking you for a password).
 </aside>
 
-<h1 id="persons">Persons</h1>
+          <h1 id="persons">Persons</h1>
 
 <p>Persons objects allow you to track and manipulate user data. </p>
 
@@ -85,22 +88,11 @@ Use your secret key from the settings page. CURL uses the -u flag to pass basic 
 
 <h2 id="list-all-persons">List all persons</h2>
 
-<p>Returns a list of your users. The users are returned sorted by creation date, with the most recently created customers appearing first.</p>
-
-<p>Arguments:</p>
-
-<ul>
-<li><h3>username</h3><p>Filter by username. Default is none.</p></li>
-<li><h3>limit</h3><p>Limit the number of return items. Default is 20 items.</p></li>
-<li><h3>page</h3><p>The page number of the return items group. Default is 1</p></li>
-<li><h3>sort</h3><p>The field name to sort by. ASC &lsquo;fieldName&rsquo; DESC &rsquo;-fieldName&rsquo;. Default is &rsquo;-timeCreated&rsquo;.</p></li>
-</ul>
-
 <blockquote>
 <p>Definition</p>
 </blockquote>
-<pre class="highlight http"><code><span class="err">GET http://localhost:3000/api/v1/persons/
-</span></code></pre>
+<pre class="highlight markdown"><code>GET http://example.com/api/v1/persons/
+</code></pre>
 
 <blockquote>
 <p>Example Request</p>
@@ -149,13 +141,24 @@ Use your secret key from the settings page. CURL uses the -u flag to pass basic 
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
+<p>Returns a list of your users. The users are returned sorted by creation date, with the most recently created customers appearing first.</p>
+
+<p>Arguments:</p>
+
+<ul>
+<li><h3>username</h3><p>Filter by username. Default is none.</p></li>
+<li><h3>limit</h3><p>Limit the number of return items. Default is 20 items.</p></li>
+<li><h3>page</h3><p>The page number of the return items group. Default is 1</p></li>
+<li><h3>sort</h3><p>The field name to sort by. ASC &lsquo;fieldName&rsquo; DESC &rsquo;-fieldName&rsquo;. Default is &rsquo;-timeCreated&rsquo;.</p></li>
+</ul>
+
 <h2 id="retrieve-a-person">Retrieve a person</h2>
 
 <blockquote>
 <p>Definition</p>
 </blockquote>
-<pre class="highlight http"><code><span class="err">GET http://localhost:3000/api/v1/persons/:id/
-</span></code></pre>
+<pre class="highlight markdown"><code>GET http://localhost:3000/api/v1/persons/:id/
+</code></pre>
 
 <blockquote>
 <p>Example Request</p>
@@ -223,11 +226,8 @@ Use your secret key from the settings page. CURL uses the -u flag to pass basic 
 <blockquote>
 <p>Definition</p>
 </blockquote>
-<pre class="highlight http"><code><span class="err">GET http://localhost:3000/api/v1/persons/current/:sid/
-</span></code></pre>
-
-<p>sid = session ID name: peoplesid from cookies.
-Be sure to encode the sid value in the request.</p>
+<pre class="highlight markdown"><code>GET http://localhost:3000/api/v1/persons/current/:sid/
+</code></pre>
 
 <blockquote>
 <p>Example Request</p>
@@ -290,13 +290,16 @@ Be sure to encode the sid value in the request.</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
+<p>sid = session ID name: peoplesid from cookies.
+Be sure to encode the sid value in the request.</p>
+
 <h2 id="update-a-person">Update a person</h2>
 
 <blockquote>
 <p>Definition</p>
 </blockquote>
-<pre class="highlight http"><code><span class="err">PUT http://localhost:3000/api/v1/persons/:id/
-</span></code></pre>
+<pre class="highlight markdown"><code>PUT http://localhost:3000/api/v1/persons/:id/
+</code></pre>
 
 <blockquote>
 <p>Example Request</p>
@@ -365,8 +368,8 @@ Be sure to encode the sid value in the request.</p>
 <blockquote>
 <p>Definition</p>
 </blockquote>
-<pre class="highlight http"><code><span class="err">PUT http://localhost:3000/api/v1/persons/:id/fields/
-</span></code></pre>
+<pre class="highlight markdown"><code>PUT http://localhost:3000/api/v1/persons/:id/fields/
+</code></pre>
 
 <blockquote>
 <p>Example Request</p>
@@ -449,8 +452,8 @@ Be sure to encode the sid value in the request.</p>
 <blockquote>
 <p>Definition</p>
 </blockquote>
-<pre class="highlight http"><code><span class="err">POST http://localhost:3000/api/v1/persons/:id/roles/
-</span></code></pre>
+<pre class="highlight markdown"><code>POST http://localhost:3000/api/v1/persons/:id/roles/
+</code></pre>
 
 <blockquote>
 <p>Example Request</p>
@@ -519,8 +522,8 @@ Be sure to encode the sid value in the request.</p>
 <blockquote>
 <p>Definition</p>
 </blockquote>
-<pre class="highlight http"><code><span class="err">DELETE http://localhost:3000/api/v1/persons/:id/roles/:role/
-</span></code></pre>
+<pre class="highlight markdown"><code>DELETE http://localhost:3000/api/v1/persons/:id/roles/:role/
+</code></pre>
 
 <blockquote>
 <p>Example Request</p>
@@ -587,8 +590,8 @@ Be sure to encode the sid value in the request.</p>
 <blockquote>
 <p>Definition</p>
 </blockquote>
-<pre class="highlight http"><code><span class="err">GET http://localhost:3000/api/v1/roles/
-</span></code></pre>
+<pre class="highlight markdown"><code>GET http://localhost:3000/api/v1/roles/
+</code></pre>
 
 <blockquote>
 <p>Example Request</p>
@@ -638,8 +641,8 @@ Be sure to encode the sid value in the request.</p>
 <blockquote>
 <p>Definition</p>
 </blockquote>
-<pre class="highlight http"><code><span class="err">GET http://localhost:3000/api/v1/roles/:rid/
-</span></code></pre>
+<pre class="highlight markdown"><code>GET http://localhost:3000/api/v1/roles/:rid/
+</code></pre>
 
 <blockquote>
 <p>Example Request</p>
