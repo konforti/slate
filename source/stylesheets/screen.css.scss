@@ -77,8 +77,20 @@ html, body {
   bottom: 0;
   width: $nav-width;
   background-color: $nav-bg;
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 14px;
+  border-right: 1px solid #ccc;
+
+  h1.title {
+    margin: 10px 20px;
+
+    font-weight: normal;
+    color: #777;
+
+    span {
+      color: $nav-active-text;
+      font-size: 20px;
+    }
+  }
 
   // language selector for mobile devices
   .lang-selector {
@@ -161,6 +173,7 @@ html, body {
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    line-height: 3;
   }
 
   // The Table of Contents is composed of multiple nested
@@ -182,7 +195,6 @@ html, body {
 
   // This is the currently selected ToC entry
   .tocify-focus {
-    @include box-shadow(0px 1px 0px $nav-active-shadow);
     background-color: $nav-active-bg;
     color: $nav-active-text;
   }
@@ -193,15 +205,9 @@ html, body {
     display: none; // tocify will override this when needed
     background-color: $nav-subitem-bg;
     font-weight: 500;
-    .tocify-item>a {
+    .tocify-item > a {
       padding-left: $nav-padding + $nav-indent;
-      font-size: 12px;
-    }
-
-    // for embossed look:
-    @include embossed-bg;
-    &>li:last-child {
-      box-shadow: none; // otherwise it'll overflow out of the subheader
+      font-size: 13px;
     }
   }
 
@@ -292,14 +298,13 @@ html, body {
   .lang-selector {
     position: fixed;
     z-index: 50;
-    border-bottom: 5px solid $lang-select-active-bg;
+    padding: 5px 20px;
   }
 }
 
 .lang-selector {
   background-color: $lang-select-bg;
   width: 100%;
-  font-weight: bold;
   a {
     display: block;
     float:left;
@@ -308,15 +313,18 @@ html, body {
     padding: 0 10px;
     line-height: 30px;
     outline: 0;
+    font-size: 13px;
 
     &:active, &:focus {
       background-color: $lang-select-pressed-bg;
       color: $lang-select-pressed-text;
+      border-radius: 3px;
     }
 
     &.active {
       background-color: $lang-select-active-bg;
       color: $lang-select-active-text;
+      border-radius: 3px;
     }
   }
 
@@ -346,15 +354,32 @@ html, body {
   &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
     margin-right: $examples-width;
     padding: 0 $main-padding;
+    font-weight: 500;
     @include box-sizing(border-box);
     display: block;
-    @include text-shadow($main-embossed-text-shadow);
 
     @extend %left-col;
   }
 
   &>ul, &>ol {
     padding-left: $main-padding + 15px;
+
+    li {
+      h3 {
+        margin-top: 0;
+        display: inline-block;
+        width: 100px;
+        vertical-align: text-top;
+      }
+      p {
+        padding-left: 20px;
+        display: inline-block;
+        width: calc(100% - 120px);
+        vertical-align: text-top;
+        font-size: 80%;
+      }
+    }
+
   }
 
   // the div is the tocify hidden div for placeholding stuff
@@ -367,13 +392,6 @@ html, body {
     font-size: 30px;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: $h1-margin-bottom;
-    margin-top: 2em;
-    border-top: 1px solid #ddd;
-    @include background-image(
-      linear-gradient(top, #fff, #f9f9f9)
-    );
   }
 
   h1:first-child, div:first-child + h1 {
@@ -535,7 +553,7 @@ html, body {
 // This is all the stuff that appears in the right half of the page
 
 .content {
-  pre, blockquote {
+  pre {
     background-color: $code-bg;
     color: #fff;
 
@@ -551,7 +569,7 @@ html, body {
 
     @extend %right-col;
 
-    &>p { margin: 0; }
+    & > p { margin: 0; }
 
     a {
       color: #fff;
@@ -565,13 +583,18 @@ html, body {
   }
 
   blockquote {
-    &>p {
-      background-color: $code-annotation-bg;
-      border-radius: 5px;
+    padding: 0 $main-padding;
+    margin: 0;
+    width: $examples-width;
+
+    float:right;
+    clear:right;
+
+    @include box-sizing(border-box);
+
+    & > p {
       padding: $code-annotation-padding;
       color: #ccc;
-      border-top: 1px solid #000;
-      border-bottom: 1px solid #404040;
     }
   }
 }

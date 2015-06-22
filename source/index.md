@@ -3,12 +3,6 @@ title: API Reference
 
 language_tabs:
   - shell
-  - ruby
-  - python
-
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
   - errors
@@ -18,151 +12,614 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+The People API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and to use HTTP response codes to indicate API errors.
+ 
+We support cross-origin resource sharing to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website's client-side code). 
+ 
+JSON will be returned in all responses from the API, including errors .
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+# API Endpoint
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+```shell
+http://localhost:3000/api/
+```
+
+Use your base url with /api/ and API version (currently v1 is available) as your endpoint. For example:
+
+<code>http://example.com/api/v1/persons/</code>
 
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+> To authorize, use People app security key.
+Example Request:
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+curl http://localhost:3000/api/v1/persons/ \
+   -u sk_A6D8FC87413B789E4E9E86FAC43A2:
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+You authenticate to the People API by providing your Secret keys in the request. You can manage your API keys from your account settings. Your API keys carry many privileges, so be sure to keep them secret!
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+Authentication to the API occurs via HTTP Basic Auth. Provide your Secret key as the basic auth username. You do not need to provide a password.
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+Use your secret key from the settings page. CURL uses the -u flag to pass basic auth credentials (adding a colon after your API key will prevent it from asking you for a password).
 </aside>
 
-# Kittens
+# Persons
+Persons objects allow you to track and manipulate user data. 
 
-## Get All Kittens
+The API allows you to retrieve, and update your user (create & delete is on the way). 
 
-```ruby
-require 'kittn'
+You can retrieve individual user or the current user as well as a list of all your users.
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+## List all persons
+Returns a list of your users. The users are returned sorted by creation date, with the most recently created customers appearing first.
+
+Arguments:
+
+* <h3>username</h3><p>Filter by username. Default is none.</p>
+* <h3>limit</h3><p>Limit the number of return items. Default is 20 items.</p>
+* <h3>page</h3><p>The page number of the return items group. Default is 1</p>
+* <h3>sort</h3><p>The field name to sort by. ASC 'fieldName' DESC '-fieldName'. Default is '-timeCreated'.</p>
+
+> Definition
+
+```http
+GET http://localhost:3000/api/v1/persons/
 ```
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+> Example Request
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl http://localhost:3000/api/v1/persons/ \
+   -u sk_A6D8FC87413B789E4E9E86FAC43A2:
 ```
 
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
+> Example Response
 
 ```json
 {
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+    "data": [
+        {
+            "_id": "54c0f152615af0970ae143a4",
+            "email": "john@email.com",
+            "isActive": "yes",
+            "username": "john"
+        },
+        {
+            "_id": "54c0f1b19a0a58095d12fb17",
+            "email": "paul@email.com",
+            "isActive": "yes",
+            "username": "paul"
+        }
+    ],
+    "pages": {
+        "current": 1,
+        "prev": 0,
+        "hasPrev": false,
+        "next": 0,
+        "hasNext": false,
+        "total": 1
+    },
+    "items": {
+        "begin": 1,
+        "end": 2,
+        "total": 2
+    },
+    "filters": {
+        "username": "",
+        "limit": 20,
+        "page": 1,
+        "sort": "_id"
+    }
 }
 ```
 
-This endpoint retrieves a specific kitten.
+## Retrieve a person
 
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+> Definition
 
-### HTTP Request
+```http
+GET http://localhost:3000/api/v1/persons/:id/
+```
 
-`GET http://example.com/kittens/<ID>`
+> Example Request
 
-### URL Parameters
+```shell
+$ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/ \
+   -u sk_A6D8FC87413B789E4E9E86FAC43A2:
+```
 
-Parameter | Description
---------- | -----------
-ID | The ID of the cat to retrieve
+> Example Response
+
+```json
+{
+    "_id": "54c0f152615af0970ae143a4",
+    "email": "john@email.com",
+    "isActive": "yes",
+    "resetPasswordExpires": "",
+    "resetPasswordToken": "",
+    "username": "john",
+    "search": [
+        "john",
+        "john@email.com"
+    ],
+    "timeCreated": "2015-01-27T14:07:44.647Z",
+    "verificationToken": "",
+    "isVerified": "",
+    "notes": [
+        {
+            "_id": "54c238dbb64d8f3253b566ef",
+            "userCreated": {
+                "id": "54c0f152615af0970ae143a4",
+                "time": "2015-01-23T12:04:43.523Z",
+                "name": "admin"
+            },
+            "data": "Very important note"
+        },
+        {
+            "_id": "54c238f6b64d8f3253b566f0",
+            "userCreated": {
+                "id": "54c0f152615af0970ae143a4",
+                "time": "2015-01-23T12:05:10.239Z",
+                "name": "admin"
+            },
+            "data": "Don't forget"
+        }
+    ],
+    "statusLog": [],
+    "status": {
+        "name": "Happy"
+    },
+    "roles": [
+        {
+            "_id": "editor",
+            "name": "Editor"
+        },
+        {
+            "_id": "writer",
+            "name": "writer"
+        }
+    ]
+}
+```
+
+## Retrieve current user
+
+> Definition
+
+```http
+GET http://localhost:3000/api/v1/persons/current/:sid/
+```
+sid = session ID name: peoplesid from cookies.
+Be sure to encode the sid value in the request.
+
+> Example Request
+
+```shell
+$ curl http://localhost:3000/api/v1/persons/current/Tb5sXrRcsWziYaghhn6Ltyl2CGzLDZVK/ \
+   -u sk_A6D8FC87413B789E4E9E86FAC43A2:
+```
+
+> Example Response
+
+```json
+{
+    "_id": "54c0f152615af0970ae143a4",
+    "email": "john@email.com",
+    "isActive": "yes",
+    "resetPasswordExpires": "",
+    "resetPasswordToken": "",
+    "username": "john",
+    "search": [
+        "john",
+        "john@email.com"
+    ],
+    "timeCreated": "2015-01-27T14:07:44.647Z",
+    "verificationToken": "",
+    "isVerified": "",
+    "notes": [
+        {
+            "_id": "54c238dbb64d8f3253b566ef",
+            "userCreated": {
+                "id": "54c0f152615af0970ae143a4",
+                "time": "2015-01-23T12:04:43.523Z",
+                "name": "admin"
+            },
+            "data": "Very important note"
+        },
+        {
+            "_id": "54c238f6b64d8f3253b566f0",
+            "userCreated": {
+                "id": "54c0f152615af0970ae143a4",
+                "time": "2015-01-23T12:05:10.239Z",
+                "name": "admin"
+            },
+            "data": "Don't forget"
+        }
+    ],
+    "statusLog": [],
+    "status": {
+        "name": "Happy"
+    },
+    "roles": [
+        {
+            "_id": "editor",
+            "name": "Editor"
+        },
+        {
+            "_id": "writer",
+            "name": "writer"
+        }
+    ]
+}
+```
+
+## Update a person
+
+> Definition
+
+```http
+PUT http://localhost:3000/api/v1/persons/:id/
+```
+
+> Example Request
+
+```shell
+$ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/ \
+   -u sk_A6D8FC87413B789E4E9E86FAC43A2: \
+   -d isActive="no"
+```
+
+> Example Response
+
+```json
+{
+    "_id": "54c0f152615af0970ae143a4",
+    "email": "john@email.com",
+    "isActive": "no",
+    "resetPasswordExpires": "",
+    "resetPasswordToken": "",
+    "username": "john",
+    "search": [
+        "john",
+        "john@email.com"
+    ],
+    "timeCreated": "2015-01-27T14:07:44.647Z",
+    "verificationToken": "",
+    "isVerified": "",
+    "notes": [
+        {
+            "_id": "54c238dbb64d8f3253b566ef",
+            "userCreated": {
+                "id": "54c0f152615af0970ae143a4",
+                "time": "2015-01-23T12:04:43.523Z",
+                "name": "admin"
+            },
+            "data": "Very important note"
+        },
+        {
+            "_id": "54c238f6b64d8f3253b566f0",
+            "userCreated": {
+                "id": "54c0f152615af0970ae143a4",
+                "time": "2015-01-23T12:05:10.239Z",
+                "name": "admin"
+            },
+            "data": "Don't forget"
+        }
+    ],
+    "statusLog": [],
+    "status": {
+        "name": "Happy"
+    },
+    "roles": [
+        {
+            "_id": "editor",
+            "name": "Editor"
+        },
+        {
+            "_id": "writer",
+            "name": "writer"
+        }
+    ]
+}
+```
+
+## Update a person fields
+
+> Definition
+
+```http
+PUT http://localhost:3000/api/v1/persons/:id/fields/
+```
+
+> Example Request
+
+```shell
+$ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/fields/ \
+   -u sk_A6D8FC87413B789E4E9E86FAC43A2: \
+   -d lastName="lennon"
+```
+
+> Example Response
+
+```json
+{
+    "record": {
+        "_id": "54c0f152615af0970ae143a4",
+        "email": "john@email.com",
+        "isActive": "no",
+        "resetPasswordExpires": "",
+        "resetPasswordToken": "",
+        "username": "john",
+        "search": [
+            "john",
+            "john@email.com"
+        ],
+        "timeCreated": "2015-01-27T14:07:44.647Z",
+        "verificationToken": "",
+        "isVerified": "",
+        "notes": [
+            {
+                "_id": "54c238dbb64d8f3253b566ef",
+                "userCreated": {
+                    "id": "54c0f152615af0970ae143a4",
+                    "time": "2015-01-23T12:04:43.523Z",
+                    "name": "admin"
+                },
+                "data": "Very important note"
+            },
+            {
+                "_id": "54c238f6b64d8f3253b566f0",
+                    "userCreated": {
+                    "id": "54c0f152615af0970ae143a4",
+                    "time": "2015-01-23T12:05:10.239Z",
+                    "name": "admin"
+                },
+                "data": "Don't forget"
+            }
+        ],
+        "statusLog": [],
+        "status": {
+            "name": "Happy"
+        },
+        "roles": [
+            {
+                "_id": "editor",
+                "name": "Editor"
+            },
+            {
+                "_id": "writer",
+                "name": "writer"
+            }
+        ]
+    },
+    "fields": [
+        {
+            "key": "firstName",
+            "name": "First Name",
+            "value": "John"
+        },
+        {
+            "key": "lastName",
+            "name": "Last Name",
+            "value": "Lennon"
+        }
+    ]
+}
+```
+## Assign a role to a user
+
+> Definition
+
+```http
+POST http://localhost:3000/api/v1/persons/:id/roles/
+```
+
+> Example Request
+
+```shell
+$ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/roles/ \
+   -u sk_A6D8FC87413B789E4E9E86FAC43A2: \
+   -d role="editor"
+```
+
+> Example Response
+
+```json
+{
+    "_id": "54c0f152615af0970ae143a4",
+    "email": "john@email.com",
+    "isActive": "no",
+    "resetPasswordExpires": "",
+    "resetPasswordToken": "",
+    "username": "john",
+    "search": [
+        "john",
+        "john@email.com"
+    ],
+    "timeCreated": "2015-01-27T14:07:44.647Z",
+    "verificationToken": "",
+    "isVerified": "",
+    "notes": [
+        {
+            "_id": "54c238dbb64d8f3253b566ef",
+            "userCreated": {
+                "id": "54c0f152615af0970ae143a4",
+                "time": "2015-01-23T12:04:43.523Z",
+                "name": "admin"
+            },
+            "data": "Very important note"
+        },
+        {
+            "_id": "54c238f6b64d8f3253b566f0",
+            "userCreated": {
+                "id": "54c0f152615af0970ae143a4",
+                "time": "2015-01-23T12:05:10.239Z",
+                "name": "admin"
+            },
+            "data": "Don't forget"
+        }
+    ],
+    "statusLog": [],
+    "status": {
+        "name": "Happy"
+    },
+    "roles": [
+        {
+            "_id": "editor",
+            "name": "Editor"
+        },
+        {
+            "_id": "writer",
+            "name": "writer"
+        }
+    ]
+}
+```
+
+## Remove a role from a user
+
+> Definition
+
+```http
+DELETE http://localhost:3000/api/v1/persons/:id/roles/:role/
+```
+
+> Example Request
+
+```shell
+$ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/roles/writer/ \
+   -u sk_A6D8FC87413B789E4E9E86FAC43A2: \
+   -X DELETE
+```
+
+> Example Response
+
+```json
+{
+    "_id": "54c0f152615af0970ae143a4",
+    "email": "john@email.com",
+    "isActive": "no",
+    "resetPasswordExpires": "",
+    "resetPasswordToken": "",
+    "username": "john",
+    "search": [
+        "john",
+        "john@email.com"
+    ],
+    "timeCreated": "2015-01-27T14:07:44.647Z",
+    "verificationToken": "",
+    "isVerified": "",
+    "notes": [
+        {
+            "_id": "54c238dbb64d8f3253b566ef",
+            "userCreated": {
+                "id": "54c0f152615af0970ae143a4",
+                "time": "2015-01-23T12:04:43.523Z",
+                "name": "admin"
+            },
+            "data": "Very important note"
+        },
+        {
+            "_id": "54c238f6b64d8f3253b566f0",
+            "userCreated": {
+                "id": "54c0f152615af0970ae143a4",
+                "time": "2015-01-23T12:05:10.239Z",
+                "name": "admin"
+            },
+            "data": "Don't forget"
+        }
+    ],
+    "statusLog": [],
+    "status": {
+        "name": "Happy"
+    },
+    "roles": [
+        {
+            "_id": "editor",
+            "name": "Editor"
+        }
+    ]
+}
+```
+
+# Roles
+
+## List all roles
+
+> Definition
+
+```http
+GET http://localhost:3000/api/v1/roles/
+```
+
+> Example Request
+
+```shell
+$ curl http://localhost:3000/api/v1/roles/ \
+   -u sk_A6D8FC87413B789E4E9E86FAC43A2:
+```
+
+> Example Response
+
+```json
+{
+    "data": [
+        {
+            "_id": "root",
+            "name": "Root"
+        },
+        {
+            "_id": "writer",
+            "name": "writer"
+        }
+    ],
+    "pages": {
+        "current": 1,
+        "prev": 0,
+        "hasPrev": false,
+        "next": 0,
+        "hasNext": false,
+        "total": 1
+    },
+    "items": {
+        "begin": 1,
+        "end": 2,
+        "total": 2
+    },
+    "filters": {
+        "name": "",
+        "limit": 20,
+        "page": 1,
+        "sort": "_id"
+    }
+}
+```
+
+## Retrieve existing role
+
+> Definition
+
+```http
+GET http://localhost:3000/api/v1/roles/:rid/
+```
+
+> Example Request
+
+```shell
+$ curl http://localhost:3000/api/v1/roles/editor/ \
+   -u sk_A6D8FC87413B789E4E9E86FAC43A2:
+```
+
+> Example Response
+
+```json
+{
+    "_id": "editor",
+    "permissions": ["can edit post"],
+    "name": "editor"
+}
+```
 
