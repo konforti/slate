@@ -80,9 +80,9 @@ html, body {
   font-size: 14px;
   border-right: 1px solid #ccc;
 
-  h1.title {
+  div.title {
     margin: 10px 20px;
-
+    font-size: 28px;
     font-weight: normal;
     color: #777;
 
@@ -558,7 +558,7 @@ html, body {
     color: #fff;
 
     padding: 2em $main-padding;
-    margin: 0;
+    margin: 10px 0 30px;
     width: $examples-width;
 
     float:right;
@@ -593,7 +593,7 @@ html, body {
     @include box-sizing(border-box);
 
     & > p {
-      padding: $code-annotation-padding;
+      margin: 0;
       color: #ccc;
     }
   }
