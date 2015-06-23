@@ -97,7 +97,7 @@ Use your secret key from the settings page. CURL uses the -u flag to pass basic 
 <blockquote>
 <p>Example Request</p>
 </blockquote>
-<pre class="highlight shell"><code>curl http://localhost:3000/api/v1/persons/ <span class="se">\</span>
+<pre class="highlight shell"><code>curl http://localhost:3000/api/v1/persons?limit<span class="o">=</span>3 <span class="se">\</span>
    -u sk_A6D8FC87413B789E4E9E86FAC43A2:
 </code></pre>
 
@@ -109,13 +109,13 @@ Use your secret key from the settings page. CURL uses the -u flag to pass basic 
         </span><span class="p">{</span><span class="w">
             </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c0f152615af0970ae143a4"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@email.com"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yes"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"on"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john"</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
             </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c0f1b19a0a58095d12fb17"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul@email.com"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yes"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"on"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paul"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
@@ -141,15 +141,16 @@ Use your secret key from the settings page. CURL uses the -u flag to pass basic 
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>Returns a list of your users. The users are returned sorted by creation date, with the most recently created customers appearing first.</p>
+<p>Returns a list of your users. The users are returned sorted by creation date, 
+with the most recently created users appearing first.</p>
 
-<p>Arguments:</p>
+<p><em>Arguments:</em></p>
 
 <ul>
-<li><h3>username</h3><p>Filter by username. Default is none.</p></li>
-<li><h3>limit</h3><p>Limit the number of return items. Default is 20 items.</p></li>
-<li><h3>page</h3><p>The page number of the return items group. Default is 1</p></li>
-<li><h3>sort</h3><p>The field name to sort by. ASC &lsquo;fieldName&rsquo; DESC &rsquo;-fieldName&rsquo;. Default is &rsquo;-timeCreated&rsquo;.</p></li>
+<li><h3>username <em>optional</em></h3><p>Filter by username. Default is none.</p></li>
+<li><h3>limit <em>optional</em></h3><p>Limit the number of return items. Default is 20 items.</p></li>
+<li><h3>page <em>optional</em></h3><p>The page number of the return items group. Default is 1</p></li>
+<li><h3>sort <em>optional</em></h3><p>The field name to sort by. ASC &lsquo;fieldName&rsquo; DESC &rsquo;-fieldName&rsquo;. Default is &rsquo;-timeCreated&rsquo;.</p></li>
 </ul>
 
 <h2 id="retrieve-a-person">Retrieve a person</h2>
@@ -173,7 +174,7 @@ Use your secret key from the settings page. CURL uses the -u flag to pass basic 
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c0f152615af0970ae143a4"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@email.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yes"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"on"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"resetPasswordExpires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
     </span><span class="s2">"resetPasswordToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john"</span><span class="p">,</span><span class="w">
@@ -220,6 +221,15 @@ Use your secret key from the settings page. CURL uses the -u flag to pass basic 
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+
+<p>Retrieves the details of an existing user. 
+You need only supply the unique user identifier.</p>
+
+<p><em>Arguments:</em></p>
+
+<ul>
+<li><h3>id <strong>required</strong></h3><p>The identifier of the user to be retrieved.</p></li>
+</ul>
 
 <h2 id="retrieve-current-user">Retrieve current user</h2>
 
@@ -242,7 +252,7 @@ Use your secret key from the settings page. CURL uses the -u flag to pass basic 
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c0f152615af0970ae143a4"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@email.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yes"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"on"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"resetPasswordExpires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
     </span><span class="s2">"resetPasswordToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john"</span><span class="p">,</span><span class="w">
@@ -290,8 +300,15 @@ Use your secret key from the settings page. CURL uses the -u flag to pass basic 
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>sid = session ID name: peoplesid from cookies.
-Be sure to encode the sid value in the request.</p>
+<p>Retrieves the details of current user. 
+You need only supply the unique session ID.
+The session ID can be found in the cookie people.sid</p>
+
+<p><em>Arguments:</em></p>
+
+<ul>
+<li><h3>sid <strong>required</strong></h3><p>The session ID of the user to be updated.</p></li>
+</ul>
 
 <h2 id="update-a-person">Update a person</h2>
 
@@ -306,7 +323,7 @@ Be sure to encode the sid value in the request.</p>
 </blockquote>
 <pre class="highlight shell"><code><span class="gp">$ </span>curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/ <span class="se">\</span>
    -u sk_A6D8FC87413B789E4E9E86FAC43A2: <span class="se">\</span>
-   -d <span class="nv">isActive</span><span class="o">=</span><span class="s2">"no"</span>
+   -d <span class="nv">mode</span><span class="o">=</span><span class="s2">"on"</span>
 </code></pre>
 
 <blockquote>
@@ -315,7 +332,7 @@ Be sure to encode the sid value in the request.</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c0f152615af0970ae143a4"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@email.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"resetPasswordExpires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
     </span><span class="s2">"resetPasswordToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john"</span><span class="p">,</span><span class="w">
@@ -363,89 +380,17 @@ Be sure to encode the sid value in the request.</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h2 id="update-a-person-fields">Update a person fields</h2>
+<p>Updates the specified user by setting the values of the parameters passed. 
+Any parameters not provided will be left unchanged.</p>
 
-<blockquote>
-<p>Definition</p>
-</blockquote>
-<pre class="highlight markdown"><code>PUT http://localhost:3000/api/v1/persons/:id/fields/
-</code></pre>
+<p><em>Arguments:</em></p>
 
-<blockquote>
-<p>Example Request</p>
-</blockquote>
-<pre class="highlight shell"><code><span class="gp">$ </span>curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/fields/ <span class="se">\</span>
-   -u sk_A6D8FC87413B789E4E9E86FAC43A2: <span class="se">\</span>
-   -d <span class="nv">lastName</span><span class="o">=</span><span class="s2">"lennon"</span>
-</code></pre>
-
-<blockquote>
-<p>Example Response</p>
-</blockquote>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"record"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c0f152615af0970ae143a4"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@email.com"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"resetPasswordExpires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"resetPasswordToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"search"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"john"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"john@email.com"</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="s2">"timeCreated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-27T14:07:44.647Z"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"verificationToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"isVerified"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"notes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c238dbb64d8f3253b566ef"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"userCreated"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c0f152615af0970ae143a4"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-23T12:04:43.523Z"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="w">
-                </span><span class="p">},</span><span class="w">
-                </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Very important note"</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c238f6b64d8f3253b566f0"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"userCreated"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c0f152615af0970ae143a4"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-23T12:05:10.239Z"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="w">
-                </span><span class="p">},</span><span class="w">
-                </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Don't forget"</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="s2">"statusLog"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Happy"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"editor"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Editor"</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"writer"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"writer"</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"firstName"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"First Name"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lastName"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Last Name"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lennon"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<ul>
+<li><h3>username <em>optional</em></h3><p>The user name of the user to be updated.</p></li>
+<li><h3>email <em>optional</em></h3><p>The email to be updated.</p></li>
+<li><h3>mode <em>optional</em></h3><p>The mode (on/off) to be updated.</p></li>
+<li><h3>FIELD <em>optional</em></h3><p>The FIELD (custom field) to be updated.</p></li>
+</ul>
 
 <h2 id="assign-a-role-to-a-user">Assign a role to a user</h2>
 
@@ -469,7 +414,7 @@ Be sure to encode the sid value in the request.</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c0f152615af0970ae143a4"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@email.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"resetPasswordExpires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
     </span><span class="s2">"resetPasswordToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john"</span><span class="p">,</span><span class="w">
@@ -517,6 +462,14 @@ Be sure to encode the sid value in the request.</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
+<p>Add a role to the specified user.</p>
+
+<p><em>Arguments:</em></p>
+
+<ul>
+<li><h3>role <strong>required</strong></h3><p>The role name to be added.</p></li>
+</ul>
+
 <h2 id="remove-a-role-from-a-user">Remove a role from a user</h2>
 
 <blockquote>
@@ -539,7 +492,7 @@ Be sure to encode the sid value in the request.</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54c0f152615af0970ae143a4"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@email.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"resetPasswordExpires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
     </span><span class="s2">"resetPasswordToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john"</span><span class="p">,</span><span class="w">
@@ -582,6 +535,14 @@ Be sure to encode the sid value in the request.</p>
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+
+<p>Remove a role from the specified user.</p>
+
+<p><em>Arguments:</em></p>
+
+<ul>
+<li><h3>role <strong>required</strong></h3><p>The role name to be removed.</p></li>
+</ul>
 
 <h1 id="roles">Roles</h1>
 
@@ -636,6 +597,8 @@ Be sure to encode the sid value in the request.</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
+<p>Returns a list of roles.</p>
+
 <h2 id="retrieve-existing-role">Retrieve existing role</h2>
 
 <blockquote>
@@ -660,6 +623,15 @@ Be sure to encode the sid value in the request.</p>
     </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"editor"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+
+<p>Retrieves the details of a role. 
+You need only supply the unique role ID.</p>
+
+<p><em>Arguments:</em></p>
+
+<ul>
+<li><h3>role <strong>required</strong></h3><p>The role ID of the role to be retrieved.</p></li>
+</ul>
 
           <h1 id="errors">Errors</h1>
 
