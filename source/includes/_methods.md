@@ -15,7 +15,7 @@ GET http://example.com/api/v1/persons/
 > Example Request
 
 ```shell
-curl http://localhost:3000/api/v1/persons/ \
+curl http://localhost:3000/api/v1/persons?limit=3 \
    -u sk_A6D8FC87413B789E4E9E86FAC43A2:
 ```
 
@@ -59,14 +59,15 @@ curl http://localhost:3000/api/v1/persons/ \
 }
 ```
 
-Returns a list of your users. The users are returned sorted by creation date, with the most recently created customers appearing first.
+Returns a list of your users. The users are returned sorted by creation date, 
+with the most recently created users appearing first.
 
-Arguments:
+*Arguments:*
 
-* <h3>username</h3><p>Filter by username. Default is none.</p>
-* <h3>limit</h3><p>Limit the number of return items. Default is 20 items.</p>
-* <h3>page</h3><p>The page number of the return items group. Default is 1</p>
-* <h3>sort</h3><p>The field name to sort by. ASC 'fieldName' DESC '-fieldName'. Default is '-timeCreated'.</p>
+* <h3>username *optional*</h3><p>Filter by username. Default is none.</p>
+* <h3>limit *optional*</h3><p>Limit the number of return items. Default is 20 items.</p>
+* <h3>page *optional*</h3><p>The page number of the return items group. Default is 1</p>
+* <h3>sort *optional*</h3><p>The field name to sort by. ASC 'fieldName' DESC '-fieldName'. Default is '-timeCreated'.</p>
 
 ## Retrieve a person
 
@@ -137,6 +138,13 @@ $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/ \
 }
 ```
 
+Retrieves the details of an existing user. 
+You need only supply the unique user identifier.
+
+*Arguments:*
+
+* <h3>id **required**</h3><p>The identifier of the user to be retrieved.</p>
+
 ## Retrieve current user
 
 > Definition
@@ -205,9 +213,13 @@ $ curl http://localhost:3000/api/v1/persons/current/Tb5sXrRcsWziYaghhn6Ltyl2CGzL
     ]
 }
 ```
+Retrieves the details of current user. 
+You need only supply the unique session ID.
+The session ID can be found in the cookie people.sid
 
-sid = session ID name: peoplesid from cookies.
-Be sure to encode the sid value in the request.
+*Arguments:*
+
+* <h3>sid **required**</h3><p>The session ID of the user to be updated.</p>
 
 ## Update a person
 
@@ -222,7 +234,7 @@ PUT http://localhost:3000/api/v1/persons/:id/
 ```shell
 $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/ \
    -u sk_A6D8FC87413B789E4E9E86FAC43A2: \
-   -d mode="off"
+   -d mode="on"
 ```
 
 > Example Response
@@ -279,89 +291,16 @@ $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/ \
 }
 ```
 
-## Update a person fields
+Updates the specified user by setting the values of the parameters passed. 
+Any parameters not provided will be left unchanged.
 
-> Definition
+*Arguments:*
 
-```md
-PUT http://localhost:3000/api/v1/persons/:id/fields/
-```
+* <h3>username *optional*</h3><p>The user name of the user to be updated.</p>
+* <h3>email *optional*</h3><p>The email to be updated.</p>
+* <h3>mode *optional*</h3><p>The mode (on/off) to be updated.</p>
+* <h3>FIELD *optional*</h3><p>The FIELD (custom field) to be updated.</p>
 
-> Example Request
-
-```shell
-$ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/fields/ \
-   -u sk_A6D8FC87413B789E4E9E86FAC43A2: \
-   -d lastName="lennon"
-```
-
-> Example Response
-
-```json
-{
-    "record": {
-        "_id": "54c0f152615af0970ae143a4",
-        "email": "john@email.com",
-        "mode": "off",
-        "resetPasswordExpires": "",
-        "resetPasswordToken": "",
-        "username": "john",
-        "search": [
-            "john",
-            "john@email.com"
-        ],
-        "timeCreated": "2015-01-27T14:07:44.647Z",
-        "verificationToken": "",
-        "isVerified": "",
-        "notes": [
-            {
-                "_id": "54c238dbb64d8f3253b566ef",
-                "userCreated": {
-                    "id": "54c0f152615af0970ae143a4",
-                    "time": "2015-01-23T12:04:43.523Z",
-                    "name": "admin"
-                },
-                "data": "Very important note"
-            },
-            {
-                "_id": "54c238f6b64d8f3253b566f0",
-                    "userCreated": {
-                    "id": "54c0f152615af0970ae143a4",
-                    "time": "2015-01-23T12:05:10.239Z",
-                    "name": "admin"
-                },
-                "data": "Don't forget"
-            }
-        ],
-        "statusLog": [],
-        "status": {
-            "name": "Happy"
-        },
-        "roles": [
-            {
-                "_id": "editor",
-                "name": "Editor"
-            },
-            {
-                "_id": "writer",
-                "name": "writer"
-            }
-        ]
-    },
-    "fields": [
-        {
-            "key": "firstName",
-            "name": "First Name",
-            "value": "John"
-        },
-        {
-            "key": "lastName",
-            "name": "Last Name",
-            "value": "Lennon"
-        }
-    ]
-}
-```
 ## Assign a role to a user
 
 > Definition
@@ -432,6 +371,12 @@ $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/roles/ \
 }
 ```
 
+Add a role to the specified user.
+
+*Arguments:*
+
+* <h3>role **required**</h3><p>The role name to be added.</p>
+
 ## Remove a role from a user
 
 > Definition
@@ -498,6 +443,12 @@ $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/roles/write
 }
 ```
 
+Remove a role from the specified user.
+
+*Arguments:*
+
+* <h3>role **required**</h3><p>The role name to be removed.</p>
+
 # Roles
 
 ## List all roles
@@ -551,6 +502,8 @@ $ curl http://localhost:3000/api/v1/roles/ \
 }
 ```
 
+Returns a list of roles.
+
 ## Retrieve existing role
 
 > Definition
@@ -575,4 +528,9 @@ $ curl http://localhost:3000/api/v1/roles/editor/ \
     "name": "editor"
 }
 ```
+Retrieves the details of a role. 
+You need only supply the unique role ID.
 
+*Arguments:*
+
+* <h3>role **required**</h3><p>The role ID of the role to be retrieved.</p>

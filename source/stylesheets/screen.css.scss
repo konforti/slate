@@ -365,11 +365,24 @@ html, body {
     padding-left: $main-padding + 15px;
 
     li {
+      list-style-type: none;
+
       h3 {
         margin-top: 0;
         display: inline-block;
         width: 100px;
         vertical-align: text-top;
+        text-align: right;
+
+        em {
+          display: block;
+          font-size: 90%;
+        }
+        strong {
+          display: block;
+          font-size: 90%;
+          color: #ffae54;
+        }
       }
       p {
         padding-left: 20px;
@@ -544,6 +557,10 @@ html, body {
     border: 1px solid #F7E633;
     @include text-shadow(1px 1px 0 #666);
     @include background(linear-gradient(bottom right, #F7E633 0%, #F1D32F 100%));
+  }
+
+  em {
+    color: #999;
   }
 }
 
