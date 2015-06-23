@@ -27,13 +27,13 @@ curl http://localhost:3000/api/v1/persons/ \
         {
             "_id": "54c0f152615af0970ae143a4",
             "email": "john@email.com",
-            "isActive": "yes",
+            "mode": "on",
             "username": "john"
         },
         {
             "_id": "54c0f1b19a0a58095d12fb17",
             "email": "paul@email.com",
-            "isActive": "yes",
+            "mode": "on",
             "username": "paul"
         }
     ],
@@ -89,7 +89,7 @@ $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/ \
 {
     "_id": "54c0f152615af0970ae143a4",
     "email": "john@email.com",
-    "isActive": "yes",
+    "mode": "on",
     "resetPasswordExpires": "",
     "resetPasswordToken": "",
     "username": "john",
@@ -158,7 +158,7 @@ $ curl http://localhost:3000/api/v1/persons/current/Tb5sXrRcsWziYaghhn6Ltyl2CGzL
 {
     "_id": "54c0f152615af0970ae143a4",
     "email": "john@email.com",
-    "isActive": "yes",
+    "mode": "on",
     "resetPasswordExpires": "",
     "resetPasswordToken": "",
     "username": "john",
@@ -222,7 +222,7 @@ PUT http://localhost:3000/api/v1/persons/:id/
 ```shell
 $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/ \
    -u sk_A6D8FC87413B789E4E9E86FAC43A2: \
-   -d isActive="no"
+   -d mode="off"
 ```
 
 > Example Response
@@ -231,7 +231,7 @@ $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/ \
 {
     "_id": "54c0f152615af0970ae143a4",
     "email": "john@email.com",
-    "isActive": "no",
+    "mode": "off",
     "resetPasswordExpires": "",
     "resetPasswordToken": "",
     "username": "john",
@@ -302,7 +302,7 @@ $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/fields/ \
     "record": {
         "_id": "54c0f152615af0970ae143a4",
         "email": "john@email.com",
-        "isActive": "no",
+        "mode": "off",
         "resetPasswordExpires": "",
         "resetPasswordToken": "",
         "username": "john",
@@ -384,7 +384,7 @@ $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/roles/ \
 {
     "_id": "54c0f152615af0970ae143a4",
     "email": "john@email.com",
-    "isActive": "no",
+    "mode": "off",
     "resetPasswordExpires": "",
     "resetPasswordToken": "",
     "username": "john",
@@ -454,7 +454,7 @@ $ curl http://localhost:3000/api/v1/persons/54c0f152615af0970ae143a4/roles/write
 {
     "_id": "54c0f152615af0970ae143a4",
     "email": "john@email.com",
-    "isActive": "no",
+    "mode": "off",
     "resetPasswordExpires": "",
     "resetPasswordToken": "",
     "username": "john",
