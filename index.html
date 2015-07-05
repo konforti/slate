@@ -236,7 +236,7 @@ You need only supply the unique user identifier.</p>
 <blockquote>
 <p>Definition</p>
 </blockquote>
-<pre class="highlight markdown"><code>GET http://localhost:3000/api/v1/persons/current/:sid/
+<pre class="highlight markdown"><code>GET http://localhost:3000/api/v1/persons/current/:jwt/
 </code></pre>
 
 <blockquote>
@@ -301,13 +301,13 @@ You need only supply the unique user identifier.</p>
 </span></code></pre>
 
 <p>Retrieves the details of current user. 
-You need only supply the unique session ID.
-The session ID can be found in the cookie people.sid</p>
+You need only supply the unique JWT (Json Web Token).
+The JWT can be found in the cookie people.jwt</p>
 
 <p><em>Arguments:</em></p>
 
 <ul>
-<li><h3>sid <strong>required</strong></h3><p>The session ID of the user to be updated.</p></li>
+<li><h3>jwt <strong>required</strong></h3><p>The json web token of the user to be retrieve.</p></li>
 </ul>
 
 <h2 id="update-a-person">Update a person</h2>
