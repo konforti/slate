@@ -150,7 +150,7 @@ You need only supply the unique user identifier.
 > Definition
 
 ```md
-GET http://localhost:3000/api/v1/persons/current/:sid/
+GET http://localhost:3000/api/v1/persons/current/:nwt/
 ```
 
 > Example Request
@@ -214,8 +214,8 @@ $ curl http://localhost:3000/api/v1/persons/current/Tb5sXrRcsWziYaghhn6Ltyl2CGzL
 }
 ```
 Retrieves the details of current user. 
-You need only supply the unique session ID.
-The session ID can be found in the cookie people.sid
+You need only supply the unique JWT (Json Web Token).
+The JWT can be found in the cookie people.jwt
 
 *Arguments:*
 
