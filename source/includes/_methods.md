@@ -150,7 +150,7 @@ You need only supply the unique user identifier.
 > Definition
 
 ```md
-GET http://localhost:3000/api/v1/persons/current/:nwt/
+GET http://localhost:3000/api/v1/persons/current/:jwt/
 ```
 
 > Example Request
@@ -219,7 +219,7 @@ The JWT can be found in the cookie people.jwt
 
 *Arguments:*
 
-* <h3>sid **required**</h3><p>The session ID of the user to be updated.</p>
+* <h3>jwt **required**</h3><p>The json web token of the user to be retrieve.</p>
 
 ## Update a person
 
